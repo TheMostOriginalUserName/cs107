@@ -9,7 +9,7 @@
  */
 
 #include <stdio.h>
-
+#include <stdlib.h>
 void print_triangle(int nlevels)
 {
     int size = 1 << nlevels;
@@ -18,16 +18,20 @@ void print_triangle(int nlevels)
         for (int col = 0; col < row; col++) {
             printf(" ");
         }
-        for (int col = 0; col + row < size; col++) {
-            printf("%c ", (col & row) ? ' ' : '*');
-        }
-        printf("\n");
-    }
-}
+	for (int col = 0; col + row < size; col++) {
+		    printf("%c ", (col & row) ? ' ' : '*');
+		}
+		printf("\n");
+	    }
+	}
 
 int main(int argc, char *argv[])
 {
-    int nlevels = 3;
+    int nlevels = (argc == 0) ? atoi(argv[1]) : 3;
+    if(nlevels > 8) {
+	printf("The size is too large to print, please choose a smaller size.\n ");
+	return 0;
+	}	
     print_triangle(nlevels);
     return 0;
 }
