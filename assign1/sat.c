@@ -7,17 +7,24 @@
 
 long signed_max(int bitwidth)
 {
-    return 0;
+    long val = 1 << (bitwidth - 1);
+
+    return --val ;
 }
 
 long signed_min(int bitwidth)
 {
-    return 0;
+    long val = 1 << (bitwidth - 1);
+ 
+	return - val;
 }
 
 long sat_add(long a, long b, int bitwidth)
 {
-    return 0;
+	long sum = a + b;
+	long maxRange = signed_max(bitwidth);
+	if(sum > maxRange ) return signed_max(bitwidth);
+	else return sum;
 }
 
 

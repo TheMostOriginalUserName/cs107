@@ -8,7 +8,24 @@
 
 int to_utf8(unsigned short cp, unsigned char seq[])
 {
-    return 0;
+    unsigned short s = cp;
+	if(cp <= 0x7F && cp >0x00) {
+	   seq[0] = cp & 0xFF;
+	   return 1;
+	}
+	else if (cp >= 0x80 && cp <= 0x07FF) {
+		seq[0] = (s >> 0x06) ^ 0xC0;
+		seq[1] = ((s ^ 0xFFC0) | 0x80) & ~0x40;
+		return 2;
+	}
+	else if (cp >= 0x0800 && cp <0xFFFF) {
+		seq[0] = ((s ^ 0xFC0FFF) >> 0x0C) | 0xE0;
+        	seq[1] = (((s ^ 0xFFF03F) >> 0x06) | 0x80) & ~0x40;
+        	seq[2] = ((s ^ 0xFFFC0) | 0x80) & ~0x40;
+		return 3;
+	}
+	else
+	return 0;
 }
 
 

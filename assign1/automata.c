@@ -9,21 +9,39 @@
 
 // uncomment below to swap in "+" as definition of LIVE_STR if your
 // terminal doesn't play nice with inverted box
-#define LIVE_STR INVERTED_BOX
-// #define LIVE_STR "+"
+//define LIVE_STR INVERTED_BOX
+#define LIVE_STR "+"
 #define EMPTY_STR " "
-
+#define Bit(x) (1L << (x))
 unsigned long advance(unsigned long cur_gen, unsigned char ruleset)
 {
-    return 0;
+    unsigned long cur = cur_gen;
+    int size = sizeof(unsigned long) * CHAR_BIT;
+    int i;
+    for(cur_gen = i = 0; i < size; i++) {
+        if(ruleset & Bit(7 &((cur >>(i - 1))| (cur << (size + 1 - i)))))
+		cur_gen |= Bit(i);
+    } 
+   return cur_gen;
 }
 
 void draw_generation(unsigned long gen)
 {
     // each cell in gen is drawn as LIVE_STR or EMPTY_STR depending on whether cell is on or off
+  int size = sizeof(unsigned long)*CHAR_BIT;
+	for(int i = size - 1; i >= 0; i --) {
+	   if(gen & Bit(i)) {
+		printf(LIVE_STR);
+		}
+	   else {
+		printf(EMPTY_STR);
+		}
+		
+		
+	}
+	printf("\n");
+ 
 }
-
-
 
 
 // ------- DO NOT EDIT ANY CODE BELOW THIS LINE (but do add comments!)  -------
